@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, send_from_directory
 
 import os
 import config
@@ -20,9 +20,17 @@ def hello():
 # https://stackoverflow.com/questions/45777770/catch-all-routes-for-flask
 @app.route("/<path:path>")
 def show_path(path):
-    print(path)
-    return "path moment"
+
     
+
+    # https://flask.palletsprojects.com/en/stable/api/#flask.send_from_directory
+    return send_from_directory(
+        DOCROOT, path
+    )
+
+
+
+
 if __name__ == "__main__":
     options = config.configuration()
     assert options.DOCROOT, "Document root must be specified in configuration file credentials.ini or on command line"
